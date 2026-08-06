@@ -65,6 +65,30 @@ export const DB = {
 
   signOut() { setSession(null); },
 
+  // ===== Datos completos de la app (un JSON por cuenta) =====
+  async loadUserData() {
+    const s = getSession();
+    if (!s) return null;
+    try {
+      const r = await fetch(restUrl('user_data', 'select=data&user_id=eq.' + s.user.id), { headers: restHeaders() });
+      if (!r.ok) return null;
+      const rows = await r.json();
+      return rows[0] ? rows[0].data : null;
+    } catch (e) { return null; }
+  },
+  async saveUserData(data) {
+    const s = getSession();
+    if (!s) return false;
+    try {
+      await fetch(restUrl('user_data', 'on_conflict=user_id'), {
+        method: 'POST',
+        headers: { ...restHeaders(), 'Prefer': 'resolution=merge-duplicates,return=minimal' },
+        body: JSON.stringify({ user_id: s.user.id, data, updated_at: new Date().toISOString() }),
+      });
+      return true;
+    } catch (e) { return false; }
+  },
+
   // ===== Datos (por cuenta) =====
   async list(tabla, filtro) {
     const s = getSession();

@@ -3872,6 +3872,37 @@ class Component extends DCLogic {
     const DB = await this.dbModule();
     const s = DB.getSession();
     this.setState({ authUser: s ? s.user : null, authChecking: false });
+    if (s) this.loadCloudData();
+  }
+  EMPTY_DATA = {
+    animals: [], potreros: [], aguadas: [], campanias: [],
+    calc: { ha:0, vacas:0, prenez:0, destete:0, pesoDestete:0, precio:0, mortandad:0, toros:0, sanidadCab:0, suplCab:0, personal:0, otrosHa:0, amortToro:0 },
+    presupuesto: { terneros:0, pesoVenta:0, precioVenta:0, vacasRefugo:0, pesoRefugo:0, precioRefugo:0, cSanidad:0, cSuplemento:0, cPersonal:0, cMantenimiento:0, cIatf:0, cComercializacion:0, cImpuestos:0 },
+  };
+  async loadCloudData() {
+    const DB = await this.dbModule();
+    const data = await DB.loadUserData();
+    const applied = data || this.EMPTY_DATA;
+    this.setState(applied);
+    this._cloudLoaded = true;
+    this._lastCloudSnap = JSON.stringify(this.cloudSnapshot(applied));
+  }
+  cloudSnapshot(s) {
+    s = s || this.state;
+    return { animals: s.animals, potreros: s.potreros, aguadas: s.aguadas, campanias: s.campanias, calc: s.calc, presupuesto: s.presupuesto };
+  }
+  scheduleCloudSave() {
+    if (!this.state.authUser || !this._cloudLoaded) return;
+    clearTimeout(this._cloudTimer);
+    this._cloudTimer = setTimeout(() => this.persistCloud(), 1000);
+  }
+  async persistCloud() {
+    const snap = this.cloudSnapshot();
+    const str = JSON.stringify(snap);
+    if (str === this._lastCloudSnap) return;
+    this._lastCloudSnap = str;
+    const DB = await this.dbModule();
+    DB.saveUserData(snap);
   }
   authToggleMode() {
     this.setState(s => ({ authMode: s.authMode === 'login' ? 'signup' : 'login', authMsg: '', authNeedsConfirm: false }));
@@ -3887,16 +3918,19 @@ class Component extends DCLogic {
       if (r.needsConfirm) { this.setState({ authBusy: false, authMsg: r.msg, authNeedsConfirm: true, authMode: 'login' }); return; }
       const s = DB.getSession();
       this.setState({ authBusy: false, authUser: s ? s.user : null, authMsg: '' });
+      if (s) this.loadCloudData();
     } else {
       const r = await DB.signIn(authEmail.trim(), authPassword.trim());
       if (!r.ok) { this.setState({ authBusy: false, authMsg: r.msg }); return; }
       this.setState({ authBusy: false, authUser: r.user, authMsg: '' });
+      this.loadCloudData();
     }
   }
   async authLogout() {
     const DB = await this.dbModule();
     DB.signOut();
-    this.setState({ authUser: null, authEmail: '', authPassword: '', authMsg: '', active: 'dashboard' });
+    this._cloudLoaded = false; this._lastCloudSnap = null; clearTimeout(this._cloudTimer);
+    this.setState({ authUser: null, authEmail: '', authPassword: '', authMsg: '', active: 'dashboard', ...this.EMPTY_DATA });
   }
 
   // ===== MAPA SATELITAL =====
@@ -4306,7 +4340,7 @@ class Component extends DCLogic {
   }
 
   componentDidMount() { this.renderIcons(); this.fetchTC(); this.fetchPrecios(); this.fetchClima(); this.loadPotreros(); this.loadAguadas(); this.trabLoadEventos(); this.authInit(); this.loadCampanias(); }
-  componentDidUpdate() { this.renderIcons(); this.ensureMapa(); }
+  componentDidUpdate() { this.renderIcons(); this.ensureMapa(); this.scheduleCloudSave(); }
   renderIcons() {
     const L = window.lucide;
     if (!L || !L.createElement) { setTimeout(() => this.renderIcons(), 80); return; }
