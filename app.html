@@ -32,6 +32,33 @@
 </style>
 </helmet>
 
+<sc-if value="{{ showAuthGate }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex; align-items:center; justify-content:center; height:100vh; width:100%; background:#192821; font-family:'Public Sans', system-ui, sans-serif;">
+  <div style="width:380px; background:#fff; border-radius:18px; padding:32px;">
+    <div style="display:flex; align-items:center; gap:10px; margin-bottom:22px;">
+      <div style="width:34px; height:34px; border-radius:9px; background:linear-gradient(150deg,#3E8E5A,#2E6B43); display:flex; align-items:center; justify-content:center;"><i data-lucide="sprout" style="width:19px;height:19px;color:#fff;"></i></div>
+      <div style="font-family:'Archivo',sans-serif; font-weight:800; font-size:16px; letter-spacing:.05em; color:#1F2A22;">AGROGESTOR</div>
+    </div>
+    <div style="font-family:'Archivo',sans-serif; font-weight:700; font-size:19px; color:#1F2A22; margin-bottom:4px;">{{ authTitle }}</div>
+    <div style="font-size:13px; color:#7C8579; margin-bottom:20px;">{{ authSubtitle }}</div>
+
+    <label style="display:block; font-size:12px; font-weight:600; color:#5E6B5E; margin-bottom:6px;">Email</label>
+    <input value="{{ authEmail }}" onInput="{{ onAuthEmail }}" placeholder="tu@email.com" style="width:100%; height:44px; border:1px solid #E2DED1; border-radius:10px; padding:0 14px; font-size:14px; color:#1F2A22; box-sizing:border-box; margin-bottom:12px;" />
+    <label style="display:block; font-size:12px; font-weight:600; color:#5E6B5E; margin-bottom:6px;">Contraseña</label>
+    <input type="password" value="{{ authPassword }}" onInput="{{ onAuthPassword }}" placeholder="••••••••" style="width:100%; height:44px; border:1px solid #E2DED1; border-radius:10px; padding:0 14px; font-size:14px; color:#1F2A22; box-sizing:border-box; margin-bottom:16px;" />
+
+    <sc-if value="{{ authHasMsg }}" hint-placeholder-val="{{ false }}">
+      <div style="padding:10px 13px; background:#F7F5EF; border-radius:9px; margin-bottom:14px; font-size:12.5px; color:#5E6B5E;">{{ authMsg }}</div>
+    </sc-if>
+
+    <button onClick="{{ authSubmit }}" style="width:100%; height:46px; background:#2E6B43; border:0; border-radius:10px; cursor:pointer; font-size:14px; font-weight:700; color:#fff;">{{ authSubmitLabel }}</button>
+
+    <div style="text-align:center; margin-top:16px; font-size:13px; color:#7C8579;">{{ authSwitchPrompt }} <a onClick="{{ authSwitchMode }}" style="color:#2E6B43; font-weight:600; cursor:pointer;">{{ authSwitchLabel }}</a></div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isAuthed }}" hint-placeholder-val="{{ false }}">
 <div style="display:flex; height:100vh; width:100%; overflow:hidden; background:#F4F2EB; font-family:'Public Sans', system-ui, sans-serif; color:#1F2A22;">
 
   <!-- ============ SIDEBAR ============ -->
@@ -70,7 +97,7 @@
       <div style="width:36px; height:36px; flex:none; border-radius:50%; background:#C99A3A; color:#192821; font-family:'Archivo',sans-serif; font-weight:700; font-size:14px; display:flex; align-items:center; justify-content:center;">LE</div>
       <div style="flex:1; line-height:1.15; min-width:0;">
         <div style="font-size:13px; font-weight:600; color:#EDF0EC; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">La Esperanza</div>
-        <div style="font-size:11px; color:#7E9484;">Salvador Maya</div>
+        <div style="font-size:11px; color:#7E9484; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ authUserLabel }}</div>
       </div>
       <i data-lucide="settings" onClick="{{ goDb }}" style="width:16px; height:16px; color:#7E9484; cursor:pointer;"></i>
     </div>
@@ -1039,42 +1066,23 @@
 
       <!-- ===== BASE DE DATOS VIEW ===== -->
       <sc-if value="{{ isDb }}" hint-placeholder-val="{{ false }}">
-      <div style="max-width:760px; margin:0 auto;">
+      <div style="max-width:640px; margin:0 auto;">
         <div style="margin-bottom:20px;">
-          <div style="font-family:'Archivo',sans-serif; font-weight:800; font-size:25px; color:#1F2A22; line-height:1;">Base de datos</div>
-          <div style="font-size:13.5px; color:#7C8579; margin-top:7px;">Conectá una base en la nube (Supabase) para que el productor y el peón vean los mismos datos en tiempo real, desde cualquier dispositivo. Sin conectar, todo se guarda solo en este equipo.</div>
+          <div style="font-family:'Archivo',sans-serif; font-weight:800; font-size:25px; color:#1F2A22; line-height:1;">Mi cuenta</div>
+          <div style="font-size:13.5px; color:#7C8579; margin-top:7px;">Tus datos (potreros, aguadas, eventos) se guardan en la nube y son privados de tu cuenta — los ves iguales en cualquier dispositivo donde inicies sesión.</div>
         </div>
 
-        <!-- estado -->
         <div style="display:flex; align-items:center; gap:11px; padding:15px 18px; background:#fff; border:1px solid #E9E5D9; border-radius:14px; margin-bottom:16px;">
-          <span style="width:11px; height:11px; border-radius:50%; background:{{ dbEstadoColor }}; flex:none;"></span>
-          <span style="flex:1; font-size:13.5px; font-weight:600; color:#1F2A22;">{{ dbEstadoTxt }}</span>
-          <i data-lucide="database" style="width:18px; height:18px; color:#B6BBAD;"></i>
+          <span style="width:11px; height:11px; border-radius:50%; background:#2E8B57; flex:none;"></span>
+          <span style="flex:1; font-size:13.5px; font-weight:600; color:#1F2A22;">Conectado como {{ authUserLabel }}</span>
+          <i data-lucide="user-check" style="width:18px; height:18px; color:#B6BBAD;"></i>
         </div>
 
-        <!-- config -->
         <div style="background:#fff; border:1px solid #E9E5D9; border-radius:16px; padding:22px;">
-          <div style="font-family:'Archivo',sans-serif; font-weight:700; font-size:15px; color:#1F2A22; margin-bottom:4px;">Credenciales de Supabase</div>
-          <div style="font-size:12.5px; color:#8A9389; margin-bottom:18px;">Las encontrás en tu proyecto de Supabase → Project Settings → API. Seguí el archivo <b>SUPABASE-README.md</b> para crear la base en 5 minutos.</div>
-
-          <label style="display:block; font-size:12px; font-weight:600; color:#5E6B5E; margin-bottom:6px;">Project URL</label>
-          <input value="{{ dbUrl }}" onInput="{{ onDbUrl }}" placeholder="https://xxxx.supabase.co" style="width:100%; height:44px; border:1px solid #E2DED1; border-radius:10px; padding:0 14px; font-family:'IBM Plex Mono',monospace; font-size:13px; color:#1F2A22; box-sizing:border-box; margin-bottom:14px;" />
-
-          <label style="display:block; font-size:12px; font-weight:600; color:#5E6B5E; margin-bottom:6px;">Anon public key</label>
-          <input value="{{ dbKey }}" onInput="{{ onDbKey }}" placeholder="eyJhbGciOiJI…" style="width:100%; height:44px; border:1px solid #E2DED1; border-radius:10px; padding:0 14px; font-family:'IBM Plex Mono',monospace; font-size:13px; color:#1F2A22; box-sizing:border-box; margin-bottom:18px;" />
-
-          <sc-if value="{{ dbHayMsg }}" hint-placeholder-val="{{ false }}">
-            <div style="display:flex; align-items:center; gap:8px; padding:11px 14px; border-radius:10px; margin-bottom:16px; background:#F7F5EF;"><i data-lucide="info" style="width:15px;height:15px;color:#8A9389;flex:none;"></i><span style="font-size:12.5px; color:#5E6B5E;">{{ dbMsg }}</span></div>
-          </sc-if>
-
-          <div style="display:flex; gap:10px;">
-            <button onClick="{{ dbProbar }}" style="display:flex; align-items:center; gap:7px; height:44px; padding:0 18px; background:#fff; border:1px solid #E2DED1; border-radius:10px; cursor:pointer; font-family:'Public Sans',sans-serif; font-size:13.5px; font-weight:600; color:#3A4A40;"><i data-lucide="plug-zap" style="width:16px;height:16px;"></i> Probar conexión</button>
-            <button onClick="{{ dbGuardar }}" style="display:flex; align-items:center; gap:7px; height:44px; padding:0 18px; background:#2E6B43; border:0; border-radius:10px; cursor:pointer; font-family:'Public Sans',sans-serif; font-size:13.5px; font-weight:600; color:#fff;"><i data-lucide="save" style="width:16px;height:16px;"></i> Guardar y conectar</button>
-            <button onClick="{{ dbDesconectar }}" style="display:flex; align-items:center; gap:7px; height:44px; padding:0 16px; background:transparent; border:0; border-radius:10px; cursor:pointer; font-family:'Public Sans',sans-serif; font-size:13.5px; font-weight:600; color:#8A9389; margin-left:auto;"><i data-lucide="unplug" style="width:16px;height:16px;"></i> Desconectar</button>
-          </div>
+          <div style="font-family:'Archivo',sans-serif; font-weight:700; font-size:15px; color:#1F2A22; margin-bottom:14px;">Cerrar sesión</div>
+          <div style="font-size:12.5px; color:#8A9389; margin-bottom:16px;">Vas a volver a la pantalla de inicio de sesión. Tus datos quedan guardados en la nube.</div>
+          <button onClick="{{ authLogout }}" style="display:flex; align-items:center; gap:7px; height:44px; padding:0 18px; background:transparent; border:1px solid #E2DED1; border-radius:10px; cursor:pointer; font-family:'Public Sans',sans-serif; font-size:13.5px; font-weight:600; color:#C25738;"><i data-lucide="log-out" style="width:16px;height:16px;"></i> Cerrar sesión</button>
         </div>
-
-        <div style="display:flex; gap:9px; margin-top:16px; padding:14px 18px; background:#FBF6EA; border:1px solid #EFE2C4; border-radius:12px;"><i data-lucide="info" style="width:16px;height:16px;color:#B9852A;flex:none;margin-top:1px;"></i><span style="font-size:12.5px; color:#7A6A38; line-height:1.5;">Con la base conectada, los potreros del mapa, las aguadas y los eventos del peón se guardan en la nube y se comparten entre todos los dispositivos. Sin conectar, la app funciona igual pero cada equipo guarda lo suyo.</span></div>
       </div>
       </sc-if>
 
@@ -2232,6 +2240,7 @@
 
   </div>
 </div>
+</sc-if>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:940}}">
 class Component extends DCLogic {
@@ -2304,12 +2313,14 @@ class Component extends DCLogic {
     trabEscuchando: false,
     trabOnline: true,
     trabAviso: '',
-    dbUrl: '',
-    dbKey: '',
-    dbMsg: '',
-    dbOk: false,
-    dbProbando: false,
-    dbRemoto: false,
+    authUser: null,
+    authChecking: true,
+    authMode: 'login',
+    authEmail: '',
+    authPassword: '',
+    authMsg: '',
+    authBusy: false,
+    authNeedsConfirm: false,
     chatMsgs: [
       { rol: 'ia', texto: '¡Hola! Soy tu asistente ganadero. Preguntame sobre manejo, sanidad, reproducción, forraje o el precio de la hacienda. Estoy al tanto de los datos de La Esperanza.' },
     ],
@@ -3852,35 +3863,40 @@ class Component extends DCLogic {
   }
   campoScroll() { const el = document.getElementById('campoScroll'); if (el) el.scrollTop = el.scrollHeight; }
 
-  // ===== BASE DE DATOS (Supabase) =====
+  // ===== CUENTA (Supabase Auth) =====
   async dbModule() {
     if (!this._DB) { const m = await import('./db.js'); this._DB = m.DB || m.default; }
     return this._DB;
   }
-  async dbInit() {
+  async authInit() {
     const DB = await this.dbModule();
-    const cfg = DB.getConfig();
-    if (cfg) this.setState({ dbUrl: cfg.url, dbKey: cfg.key, dbRemoto: DB.isRemote(), dbOk: true, dbMsg: 'Conectado a la nube' });
+    const s = DB.getSession();
+    this.setState({ authUser: s ? s.user : null, authChecking: false });
   }
-  async dbProbar() {
-    const DB = await this.dbModule();
-    const { dbUrl, dbKey } = this.state;
-    if (!dbUrl.trim() || !dbKey.trim()) { this.setState({ dbMsg: 'Completá la URL y la clave.', dbOk: false }); return; }
-    this.setState({ dbProbando: true, dbMsg: '' });
-    const r = await DB.test(dbUrl.trim(), dbKey.trim());
-    this.setState({ dbProbando: false, dbMsg: r.msg, dbOk: r.ok });
+  authToggleMode() {
+    this.setState(s => ({ authMode: s.authMode === 'login' ? 'signup' : 'login', authMsg: '', authNeedsConfirm: false }));
   }
-  async dbGuardar() {
+  async authSubmit() {
     const DB = await this.dbModule();
-    const { dbUrl, dbKey } = this.state;
-    if (!dbUrl.trim() || !dbKey.trim()) { this.setState({ dbMsg: 'Completá la URL y la clave.', dbOk: false }); return; }
-    DB.setConfig({ url: dbUrl.trim(), key: dbKey.trim() });
-    this.setState({ dbRemoto: true, dbOk: true, dbMsg: 'Guardado. Los datos ahora van a la nube.' });
+    const { authEmail, authPassword, authMode } = this.state;
+    if (!authEmail.trim() || !authPassword.trim()) { this.setState({ authMsg: 'Completá email y contraseña.' }); return; }
+    this.setState({ authBusy: true, authMsg: '' });
+    if (authMode === 'signup') {
+      const r = await DB.signUp(authEmail.trim(), authPassword.trim());
+      if (!r.ok) { this.setState({ authBusy: false, authMsg: r.msg }); return; }
+      if (r.needsConfirm) { this.setState({ authBusy: false, authMsg: r.msg, authNeedsConfirm: true, authMode: 'login' }); return; }
+      const s = DB.getSession();
+      this.setState({ authBusy: false, authUser: s ? s.user : null, authMsg: '' });
+    } else {
+      const r = await DB.signIn(authEmail.trim(), authPassword.trim());
+      if (!r.ok) { this.setState({ authBusy: false, authMsg: r.msg }); return; }
+      this.setState({ authBusy: false, authUser: r.user, authMsg: '' });
+    }
   }
-  async dbDesconectar() {
+  async authLogout() {
     const DB = await this.dbModule();
-    DB.clearConfig();
-    this.setState({ dbRemoto: false, dbOk: false, dbUrl: '', dbKey: '', dbMsg: 'Desconectado. Volviste a datos locales.' });
+    DB.signOut();
+    this.setState({ authUser: null, authEmail: '', authPassword: '', authMsg: '', active: 'dashboard' });
   }
 
   // ===== MAPA SATELITAL =====
@@ -4289,7 +4305,7 @@ class Component extends DCLogic {
     this.generarPDF(el, 'Informe-Mapa-La-Esperanza.pdf');
   }
 
-  componentDidMount() { this.renderIcons(); this.fetchTC(); this.fetchPrecios(); this.fetchClima(); this.loadPotreros(); this.loadAguadas(); this.trabLoadEventos(); this.dbInit(); this.loadCampanias(); }
+  componentDidMount() { this.renderIcons(); this.fetchTC(); this.fetchPrecios(); this.fetchClima(); this.loadPotreros(); this.loadAguadas(); this.trabLoadEventos(); this.authInit(); this.loadCampanias(); }
   componentDidUpdate() { this.renderIcons(); this.ensureMapa(); }
   renderIcons() {
     const L = window.lucide;
@@ -4512,20 +4528,23 @@ class Component extends DCLogic {
       onPreIatf: (e) => this.updPresu('cIatf', e),
       onPreComerc: (e) => this.updPresu('cComercializacion', e),
       onPreImp: (e) => this.updPresu('cImpuestos', e),
-      dbUrl: this.state.dbUrl,
-      dbKey: this.state.dbKey,
-      dbMsg: this.state.dbMsg,
-      dbOk: this.state.dbOk,
-      dbHayMsg: !!this.state.dbMsg,
-      dbProbando: this.state.dbProbando,
-      dbRemoto: this.state.dbRemoto,
-      dbEstadoTxt: this.state.dbRemoto ? 'Conectado a la nube' : 'Datos locales (este dispositivo)',
-      dbEstadoColor: this.state.dbRemoto ? '#2E8B57' : '#B9852A',
-      onDbUrl: (e) => this.setState({ dbUrl: e.target.value }),
-      onDbKey: (e) => this.setState({ dbKey: e.target.value }),
-      dbProbar: () => this.dbProbar(),
-      dbGuardar: () => this.dbGuardar(),
-      dbDesconectar: () => this.dbDesconectar(),
+      isAuthed: !!this.state.authUser,
+      showAuthGate: !this.state.authChecking && !this.state.authUser,
+      authUserLabel: this.state.authUser ? this.state.authUser.email : '',
+      authTitle: this.state.authMode === 'login' ? 'Iniciar sesión' : 'Crear cuenta',
+      authSubtitle: this.state.authMode === 'login' ? 'Entrá con tu cuenta de AGROGESTOR.' : 'Creá tu cuenta para guardar tus datos en la nube.',
+      authEmail: this.state.authEmail,
+      authPassword: this.state.authPassword,
+      onAuthEmail: (e) => this.setState({ authEmail: e.target.value }),
+      onAuthPassword: (e) => this.setState({ authPassword: e.target.value }),
+      authHasMsg: !!this.state.authMsg,
+      authMsg: this.state.authMsg,
+      authSubmitLabel: this.state.authBusy ? 'Un momento…' : (this.state.authMode === 'login' ? 'Ingresar' : 'Crear cuenta'),
+      authSubmit: () => this.authSubmit(),
+      authSwitchPrompt: this.state.authMode === 'login' ? '¿No tenés cuenta?' : '¿Ya tenés cuenta?',
+      authSwitchLabel: this.state.authMode === 'login' ? 'Creá una' : 'Iniciá sesión',
+      authSwitchMode: () => this.authToggleMode(),
+      authLogout: () => this.authLogout(),
       pinAdd: (d) => this.pinAdd(d),
       pin1: () => this.pinAdd('1'), pin2: () => this.pinAdd('2'), pin3: () => this.pinAdd('3'),
       pin4: () => this.pinAdd('4'), pin5: () => this.pinAdd('5'), pin6: () => this.pinAdd('6'),

@@ -1,122 +1,111 @@
 // =============================================================================
-// AGROGESTOR · Capa de datos (db.js)
+// AGROGESTOR · Capa de datos + cuentas (db.js)
 // -----------------------------------------------------------------------------
-// Una sola API para toda la app. Si hay credenciales de Supabase configuradas,
-// guarda y lee de la BASE DE DATOS EN LA NUBE (compartida entre el productor y
-// el peón, en tiempo real). Si no, cae automáticamente a localStorage para que
-// la app siga funcionando sin conexión / sin configurar.
-//
-// Supabase = PostgreSQL gestionado, gratis, con API REST y CORS. La app lo llama
-// directo desde el navegador con la "anon key" (clave pública de solo-lectura/
-// escritura acotada por reglas RLS). No expone la base al público: las reglas se
-// definen en el panel de Supabase (ver SUPABASE-README.md).
+// Backend único y compartido (un solo proyecto de Supabase para toda la app).
+// Cada usuario se registra con su email/contraseña (Supabase Auth) y sus datos
+// quedan aislados: las políticas de la base (RLS) solo dejan ver/editar las
+// filas cuyo user_id sea el del usuario logueado. Sin login, la app cae a
+// localStorage (modo local, un solo equipo, sin cuenta).
 // =============================================================================
 
-const CONFIG_KEY = 'agrogestor_db_config';
+const SUPABASE_URL = 'https://atcwajfxemcylfjfvzos.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_w9ZeEI5nXWHxjriFZgaI2g_yoT4yXmK';
 
-function getConfig() {
-  try { return JSON.parse(localStorage.getItem(CONFIG_KEY) || 'null'); } catch (e) { return null; }
+const SESSION_KEY = 'agrogestor_session';
+
+function getSession() {
+  try { return JSON.parse(localStorage.getItem(SESSION_KEY) || 'null'); } catch (e) { return null; }
 }
-function setConfig(cfg) {
-  try { localStorage.setItem(CONFIG_KEY, JSON.stringify(cfg)); } catch (e) {}
+function setSession(s) {
+  try { s ? localStorage.setItem(SESSION_KEY, JSON.stringify(s)) : localStorage.removeItem(SESSION_KEY); } catch (e) {}
 }
-function isRemote() {
-  const c = getConfig();
-  return !!(c && c.url && c.key);
+function authHeaders(token) {
+  return { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + (token || SUPABASE_ANON_KEY), 'Content-Type': 'application/json' };
 }
 
-function headers() {
-  const c = getConfig();
-  return {
-    'apikey': c.key,
-    'Authorization': 'Bearer ' + c.key,
-    'Content-Type': 'application/json',
-    'Prefer': 'return=representation',
-  };
+// ---- localStorage fallback (sin cuenta) ----
+function lsKey(tabla) { return 'agrogestor_tbl_' + tabla; }
+function lsList(tabla) { try { return JSON.parse(localStorage.getItem(lsKey(tabla)) || '[]'); } catch (e) { return []; } }
+function lsSave(tabla, arr) { try { localStorage.setItem(lsKey(tabla), JSON.stringify(arr)); } catch (e) {} }
+
+function restHeaders() {
+  const s = getSession();
+  return { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + (s ? s.access_token : SUPABASE_ANON_KEY), 'Content-Type': 'application/json', 'Prefer': 'return=representation' };
 }
 function restUrl(tabla, query) {
-  const c = getConfig();
-  const base = c.url.replace(/\/$/, '') + '/rest/v1/' + tabla;
+  const base = SUPABASE_URL + '/rest/v1/' + tabla;
   return query ? base + '?' + query : base;
 }
 
-// ---- localStorage fallback ----
-function lsKey(tabla) { return 'agrogestor_tbl_' + tabla; }
-function lsList(tabla) {
-  try { return JSON.parse(localStorage.getItem(lsKey(tabla)) || '[]'); } catch (e) { return []; }
-}
-function lsSave(tabla, arr) {
-  try { localStorage.setItem(lsKey(tabla), JSON.stringify(arr)); } catch (e) {}
-}
-
-// ---- API pública ----
 export const DB = {
-  getConfig,
-  setConfig,
-  clearConfig() { try { localStorage.removeItem(CONFIG_KEY); } catch (e) {} },
-  isRemote,
+  // ===== Cuenta =====
+  getSession,
+  isLogged() { return !!getSession(); },
+  isRemote() { return !!getSession(); },
 
-  // Prueba la conexión: pide 1 fila de la tabla "campos". Devuelve {ok, msg}.
-  async test(url, key) {
+  async signUp(email, password) {
     try {
-      const u = url.replace(/\/$/, '') + '/rest/v1/campos?select=id&limit=1';
-      const r = await fetch(u, { headers: { apikey: key, Authorization: 'Bearer ' + key } });
-      if (r.ok) return { ok: true, msg: 'Conexión exitosa' };
-      if (r.status === 401 || r.status === 403) return { ok: false, msg: 'Clave incorrecta o permisos (RLS) sin configurar.' };
-      if (r.status === 404) return { ok: false, msg: 'Falta crear las tablas. Corré el SQL del README.' };
-      return { ok: false, msg: 'Error ' + r.status };
-    } catch (e) {
-      return { ok: false, msg: 'No se pudo conectar. Revisá la URL.' };
-    }
+      const r = await fetch(SUPABASE_URL + '/auth/v1/signup', { method: 'POST', headers: authHeaders(), body: JSON.stringify({ email, password }) });
+      const data = await r.json();
+      if (!r.ok) return { ok: false, msg: data.msg || data.error_description || data.error || 'No se pudo crear la cuenta.' };
+      if (data.access_token) { setSession({ access_token: data.access_token, user: data.user }); return { ok: true, msg: 'Cuenta creada.', needsConfirm: false }; }
+      return { ok: true, msg: 'Cuenta creada. Revisá tu email para confirmar antes de entrar.', needsConfirm: true };
+    } catch (e) { return { ok: false, msg: 'No se pudo conectar.' }; }
   },
 
-  // Lista todas las filas de una tabla (opcional: filtro tipo "peon=eq.Ramón").
-  async list(tabla, filtro) {
-    if (!isRemote()) return lsList(tabla);
+  async signIn(email, password) {
     try {
-      const q = 'select=*' + (filtro ? '&' + filtro : '') + '&order=creado.desc';
-      const r = await fetch(restUrl(tabla, q), { headers: headers() });
+      const r = await fetch(SUPABASE_URL + '/auth/v1/token?grant_type=password', { method: 'POST', headers: authHeaders(), body: JSON.stringify({ email, password }) });
+      const data = await r.json();
+      if (!r.ok) return { ok: false, msg: data.error_description || data.msg || 'Email o contraseña incorrectos.' };
+      setSession({ access_token: data.access_token, user: data.user });
+      return { ok: true, user: data.user };
+    } catch (e) { return { ok: false, msg: 'No se pudo conectar.' }; }
+  },
+
+  signOut() { setSession(null); },
+
+  // ===== Datos (por cuenta) =====
+  async list(tabla, filtro) {
+    const s = getSession();
+    if (!s) return lsList(tabla);
+    try {
+      const q = 'select=*&user_id=eq.' + s.user.id + (filtro ? '&' + filtro : '') + '&order=creado.desc';
+      const r = await fetch(restUrl(tabla, q), { headers: restHeaders() });
       if (!r.ok) throw new Error(r.status);
       return await r.json();
-    } catch (e) {
-      return lsList(tabla); // fallback si falla la red
-    }
+    } catch (e) { return lsList(tabla); }
   },
 
-  // Inserta una fila. Devuelve la fila creada.
   async insert(tabla, row) {
-    if (!isRemote()) {
+    const s = getSession();
+    if (!s) {
       const arr = lsList(tabla);
       const nuevo = { ...row, id: row.id || ('l' + Date.now()) };
       arr.unshift(nuevo); lsSave(tabla, arr);
       return nuevo;
     }
-    const r = await fetch(restUrl(tabla), { method: 'POST', headers: headers(), body: JSON.stringify(row) });
+    const r = await fetch(restUrl(tabla), { method: 'POST', headers: restHeaders(), body: JSON.stringify({ ...row, user_id: s.user.id }) });
     const data = await r.json();
     return Array.isArray(data) ? data[0] : data;
   },
 
-  // Actualiza por id.
   async update(tabla, id, patch) {
-    if (!isRemote()) {
+    const s = getSession();
+    if (!s) {
       const arr = lsList(tabla).map(x => x.id === id ? { ...x, ...patch } : x);
       lsSave(tabla, arr);
       return arr.find(x => x.id === id);
     }
-    const r = await fetch(restUrl(tabla, 'id=eq.' + encodeURIComponent(id)), {
-      method: 'PATCH', headers: headers(), body: JSON.stringify(patch),
-    });
+    const r = await fetch(restUrl(tabla, 'id=eq.' + encodeURIComponent(id)), { method: 'PATCH', headers: restHeaders(), body: JSON.stringify(patch) });
     const data = await r.json();
     return Array.isArray(data) ? data[0] : data;
   },
 
-  // Elimina por id.
   async remove(tabla, id) {
-    if (!isRemote()) {
-      lsSave(tabla, lsList(tabla).filter(x => x.id !== id));
-      return true;
-    }
-    await fetch(restUrl(tabla, 'id=eq.' + encodeURIComponent(id)), { method: 'DELETE', headers: headers() });
+    const s = getSession();
+    if (!s) { lsSave(tabla, lsList(tabla).filter(x => x.id !== id)); return true; }
+    await fetch(restUrl(tabla, 'id=eq.' + encodeURIComponent(id)), { method: 'DELETE', headers: restHeaders() });
     return true;
   },
 };
