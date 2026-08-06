@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+<template id="__bundler_thumbnail" data-bg-color="#0C1410">
+  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="50" r="26" fill="#4ADE80"></circle>
+    <path d="M50 30 L50 70 M35 45 L50 30 L65 45" stroke="#0C1410" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+  </svg>
+</template>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  * { box-sizing:border-box; }
+  html, body { margin:0; padding:0; background:#0C1410; }
+  ::-webkit-scrollbar { width:11px; }
+  ::-webkit-scrollbar-track { background:#0C1410; }
+  ::-webkit-scrollbar-thumb { background:#26352C; border-radius:8px; border:3px solid #0C1410; background-clip:padding-box; }
+  @keyframes ag-marquee { 0%{transform:translateX(0);} 100%{transform:translateX(-50%);} }
+  @keyframes ag-pulse { 0%,100%{opacity:1; box-shadow:0 0 0 0 rgba(74,222,128,.5);} 50%{opacity:.6; box-shadow:0 0 0 6px rgba(74,222,128,0);} }
+  @keyframes ag-float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-10px);} }
+  @keyframes ag-scan { 0%{top:0;} 100%{top:100%;} }
+</style>
+</helmet>
+
+<div style="background:#0C1410; font-family:'Public Sans',system-ui,sans-serif; color:#E8EEE9; min-height:100vh; overflow:hidden; position:relative;">
+
+  <!-- ambient glows -->
+  <div style="position:absolute; top:-180px; right:-120px; width:620px; height:620px; background:radial-gradient(circle,rgba(74,222,128,.14),transparent 65%); pointer-events:none;"></div>
+  <div style="position:absolute; top:380px; left:-160px; width:520px; height:520px; background:radial-gradient(circle,rgba(201,154,58,.10),transparent 65%); pointer-events:none;"></div>
+  <!-- grid -->
+  <div style="position:absolute; inset:0; background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px); background-size:54px 54px; mask-image:radial-gradient(ellipse 90% 60% at 50% 0%,#000 40%,transparent 100%); pointer-events:none;"></div>
+
+  <div style="position:relative; z-index:2;">
+
+  <!-- ===== LIVE TICKER ===== -->
+  <div style="border-bottom:1px solid rgba(255,255,255,.07); background:rgba(12,20,16,.6); overflow:hidden;">
+    <div style="display:flex; align-items:center;">
+      <div style="flex:none; display:flex; align-items:center; gap:7px; padding:8px 16px; background:rgba(74,222,128,.08); border-right:1px solid rgba(255,255,255,.07);">
+        <span style="width:7px; height:7px; border-radius:50%; background:#4ADE80; animation:ag-pulse 1.8s infinite;"></span>
+        <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:600; letter-spacing:.1em; color:#6EE7A0;">EN VIVO</span>
+      </div>
+      <div style="flex:1; overflow:hidden;">
+        <div style="display:flex; width:max-content; animation:ag-marquee 26s linear infinite; font-family:'IBM Plex Mono',monospace; font-size:12px; color:#9DB2A4;">
+          <span style="display:flex; gap:30px; padding:8px 30px;">
+            <span>TERNERO <b style="color:#E8EEE9;">$4.488/kg</b> <b style="color:#4ADE80;">▲2,0%</b></span>
+            <span>DÓLAR BLUE <b style="color:#E8EEE9;">$1.200</b></span>
+            <span>MERCADO LINIERS <b style="color:#4ADE80;">ACTIVO</b></span>
+            <span>CLIMA GUALEGUAYCHÚ <b style="color:#E8EEE9;">18°C</b></span>
+            <span>LLUVIA MES <b style="color:#E8EEE9;">112mm</b></span>
+            <span>EV/HA REGIÓN <b style="color:#E8EEE9;">0,82</b></span>
+          </span>
+          <span style="display:flex; gap:30px; padding:8px 30px;">
+            <span>TERNERO <b style="color:#E8EEE9;">$4.488/kg</b> <b style="color:#4ADE80;">▲2,0%</b></span>
+            <span>DÓLAR BLUE <b style="color:#E8EEE9;">$1.200</b></span>
+            <span>MERCADO LINIERS <b style="color:#4ADE80;">ACTIVO</b></span>
+            <span>CLIMA GUALEGUAYCHÚ <b style="color:#E8EEE9;">18°C</b></span>
+            <span>LLUVIA MES <b style="color:#E8EEE9;">112mm</b></span>
+            <span>EV/HA REGIÓN <b style="color:#E8EEE9;">0,82</b></span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== NAV ===== -->
+  <header style="max-width:1200px; margin:0 auto; height:72px; display:flex; align-items:center; gap:14px; padding:0 28px;">
+    <div style="display:flex; align-items:center; gap:11px; flex:1;">
+      <div style="width:36px; height:36px; border-radius:10px; background:linear-gradient(150deg,#4ADE80,#2E6B43); display:flex; align-items:center; justify-content:center; box-shadow:0 0 18px rgba(74,222,128,.45);"><i data-lucide="sprout" style="width:20px;height:20px;color:#0C1410;"></i></div>
+      <span style="font-family:'Archivo',sans-serif; font-weight:800; font-size:18px; letter-spacing:.05em;">AGROGESTOR</span>
+    </div>
+    <nav style="display:flex; align-items:center; gap:28px; margin-right:8px;">
+      <a href="#explorar" style="font-size:14px; font-weight:600; color:#9DB2A4; text-decoration:none;" style-hover="color:#E8EEE9;">Funciones</a>
+      <a href="#planes" style="font-size:14px; font-weight:600; color:#9DB2A4; text-decoration:none;" style-hover="color:#E8EEE9;">Planes</a>
+      <a href="#" style="font-size:14px; font-weight:600; color:#9DB2A4; text-decoration:none;" style-hover="color:#E8EEE9;">Calculadora</a>
+    </nav>
+    <a href="app.html" style="display:flex; align-items:center; gap:7px; height:40px; padding:0 18px; background:#4ADE80; color:#0C1410; border-radius:10px; text-decoration:none; font-size:14px; font-weight:700; box-shadow:0 0 22px rgba(74,222,128,.3);" style-hover="background:#6EE7A0;">Ingresar al sistema <i data-lucide="arrow-right" style="width:15px;height:15px;"></i></a>
+  </header>
+
+  <!-- ===== HERO ===== -->
+  <section style="max-width:1200px; margin:0 auto; padding:54px 28px 40px; display:grid; grid-template-columns:1fr 1fr; gap:54px; align-items:center;">
+    <div>
+      <div style="display:inline-flex; align-items:center; gap:8px; padding:6px 13px; background:rgba(74,222,128,.08); border:1px solid rgba(74,222,128,.25); border-radius:20px; font-size:12.5px; font-weight:600; color:#6EE7A0;"><span style="width:6px;height:6px;border-radius:50%;background:#4ADE80;animation:ag-pulse 1.8s infinite;"></span> Plataforma satelital · datos en tiempo real</div>
+      <h1 style="font-family:'Archivo',sans-serif; font-weight:900; font-size:50px; line-height:1.03; letter-spacing:-.025em; margin:20px 0 0; color:#F3F7F3;">Conocé los números <span style="color:#4ADE80; text-shadow:0 0 28px rgba(74,222,128,.5);">reales</span> de tu campo.</h1>
+      <p style="font-size:17px; line-height:1.55; color:#9DB2A4; margin:18px 0 0; max-width:480px;">Mapa satelital de potreros, precio del ternero en vivo y diagnóstico técnico profesional. Un centro de control para tu producción ganadera.</p>
+      <div style="display:flex; gap:12px; margin-top:28px;">
+        <a href="app.html" style="display:flex; align-items:center; gap:8px; height:50px; padding:0 24px; background:#4ADE80; color:#0C1410; border-radius:12px; text-decoration:none; font-size:15px; font-weight:700; box-shadow:0 0 28px rgba(74,222,128,.35);" style-hover="background:#6EE7A0;">Ingresar al sistema <i data-lucide="arrow-right" style="width:17px;height:17px;"></i></a>
+        <a href="#" style="display:flex; align-items:center; gap:8px; height:50px; padding:0 24px; background:rgba(255,255,255,.04); color:#E8EEE9; border:1px solid rgba(255,255,255,.14); border-radius:12px; text-decoration:none; font-size:15px; font-weight:700;" style-hover="border-color:rgba(74,222,128,.5);"><i data-lucide="calculator" style="width:17px;height:17px;"></i> Calculadora gratis</a>
+      </div>
+      <div style="display:flex; gap:34px; margin-top:38px;">
+        <div><div style="font-family:'Archivo',sans-serif; font-weight:800; font-size:26px; color:#F3F7F3;">100%</div><div style="font-size:12.5px; color:#7E9484; margin-top:2px;">Calculadora gratuita</div></div>
+        <div style="border-left:1px solid rgba(255,255,255,.1); padding-left:34px;"><div style="font-family:'Archivo',sans-serif; font-weight:800; font-size:26px; color:#F3F7F3;">6</div><div style="font-size:12.5px; color:#7E9484; margin-top:2px;">Fuentes de referencia</div></div>
+        <div style="border-left:1px solid rgba(255,255,255,.1); padding-left:34px;"><div style="font-family:'Archivo',sans-serif; font-weight:800; font-size:26px; color:#F3F7F3;">5 min</div><div style="font-size:12.5px; color:#7E9484; margin-top:2px;">Para conocer tu margen</div></div>
+      </div>
+    </div>
+
+    <!-- preview mock -->
+    <div style="position:relative; animation:ag-float 7s ease-in-out infinite;">
+      <div style="position:absolute; inset:-40px; background:radial-gradient(circle,rgba(74,222,128,.16),transparent 60%); pointer-events:none;"></div>
+      <div style="position:relative; background:rgba(18,28,22,.82); border:1px solid rgba(255,255,255,.1); border-radius:18px; box-shadow:0 30px 80px -24px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.05); overflow:hidden; backdrop-filter:blur(8px);">
+        <div style="position:absolute; left:0; right:0; height:2px; background:linear-gradient(90deg,transparent,rgba(74,222,128,.55),transparent); animation:ag-scan 4.5s linear infinite; pointer-events:none;"></div>
+        <div style="display:flex; align-items:center; gap:8px; padding:13px 16px; border-bottom:1px solid rgba(255,255,255,.08);">
+          <div style="width:26px; height:26px; border-radius:7px; background:linear-gradient(150deg,#4ADE80,#2E6B43); display:flex; align-items:center; justify-content:center;"><i data-lucide="sprout" style="width:14px;height:14px;color:#0C1410;"></i></div>
+          <span style="font-family:'Archivo',sans-serif; font-weight:700; font-size:13px; letter-spacing:.04em;">AGROGESTOR — Dashboard</span>
+          <span style="margin-left:auto; display:flex; align-items:center; gap:6px; font-family:'IBM Plex Mono',monospace; font-size:10px; color:#6EE7A0;"><span style="width:6px;height:6px;border-radius:50%;background:#4ADE80;animation:ag-pulse 1.8s infinite;"></span>LIVE</span>
+        </div>
+        <div style="padding:16px;">
+          <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:9px; margin-bottom:14px;">
+            <div style="background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.06); border-radius:10px; padding:10px;"><div style="font-size:9.5px; color:#7E9484; font-weight:600;">Rodeo</div><div style="font-family:'Archivo',sans-serif; font-weight:800; font-size:18px; margin-top:3px;">477</div></div>
+            <div style="background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.06); border-radius:10px; padding:10px;"><div style="font-size:9.5px; color:#7E9484; font-weight:600;">Preñez</div><div style="font-family:'Archivo',sans-serif; font-weight:800; font-size:18px; margin-top:3px;">85%</div></div>
+            <div style="background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.06); border-radius:10px; padding:10px;"><div style="font-size:9.5px; color:#7E9484; font-weight:600;">Neto</div><div style="font-family:'Archivo',sans-serif; font-weight:800; font-size:18px; margin-top:3px; color:#4ADE80;">$119M</div></div>
+            <div style="background:rgba(201,154,58,.1); border:1px solid rgba(201,154,58,.22); border-radius:10px; padding:10px;"><div style="font-size:9.5px; color:#D9B362; font-weight:600;">Alertas</div><div style="font-family:'Archivo',sans-serif; font-weight:800; font-size:18px; margin-top:3px; color:#E0B450;">2</div></div>
+          </div>
+          <div style="background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.06); border-radius:12px; padding:13px;">
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:4px;">
+              <span style="font-size:11px; font-weight:700; color:#C7D2C9;">Precio ternero — 6 meses</span>
+              <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:600; color:#4ADE80;">$4.488 ▲</span>
+            </div>
+            <svg viewBox="0 0 360 90" preserveAspectRatio="none" style="width:100%; height:78px; display:block;">
+              <defs><linearGradient id="hf2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#4ADE80" stop-opacity=".28"></stop><stop offset="100%" stop-color="#4ADE80" stop-opacity="0"></stop></linearGradient></defs>
+              <path d="{{ areaPath }}" fill="url(#hf2)"></path>
+              <polyline points="{{ linePoints }}" fill="none" stroke="#4ADE80" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="filter:drop-shadow(0 0 5px rgba(74,222,128,.6));"></polyline>
+              <circle cx="{{ lastX }}" cy="{{ lastY }}" r="3.5" fill="#0C1410" stroke="#4ADE80" stroke-width="2"></circle>
+            </svg>
+            <div style="display:flex; align-items:center; gap:6px; margin-top:8px; padding:7px 10px; background:rgba(74,222,128,.08); border-radius:8px;"><i data-lucide="circle-check" style="width:13px;height:13px;color:#4ADE80;"></i><span style="font-size:11px; font-weight:600; color:#6EE7A0;">Precio alto — momento ideal para vender</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CHECK BAND ===== -->
+  <section style="max-width:1200px; margin:0 auto; padding:18px 28px 50px;">
+    <div style="display:flex; flex-wrap:wrap; gap:10px;">
+      <sc-for list="{{ checks }}" as="c" hint-placeholder-count="7">
+        <span style="display:inline-flex; align-items:center; gap:7px; padding:9px 15px; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.09); border-radius:24px; font-size:13.5px; font-weight:600; color:#C7D2C9;"><i data-lucide="check" style="width:15px;height:15px;color:#4ADE80;"></i> {{ c }}</span>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- ===== FEATURES ===== -->
+  <section id="features" style="max-width:1200px; margin:0 auto; padding:30px 28px;">
+    <div style="text-align:center; margin-bottom:38px;">
+      <div style="font-size:13px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#4ADE80;">Lo que te da AGROGESTOR</div>
+      <h2 style="font-family:'Archivo',sans-serif; font-weight:800; font-size:34px; letter-spacing:-.01em; margin:10px 0 0; color:#F3F7F3;">Herramientas que ningún otro sistema tiene</h2>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:18px;">
+
+      <div style="background:rgba(255,255,255,.025); border:1px solid rgba(255,255,255,.08); border-radius:18px; padding:22px;" style-hover="border-color:rgba(74,222,128,.35);">
+        <div style="display:flex; align-items:center; justify-content:space-between;">
+          <div style="width:46px;height:46px;border-radius:12px;background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.2);display:flex;align-items:center;justify-content:center;"><i data-lucide="map" style="width:23px;height:23px;color:#4ADE80;"></i></div>
+          <span style="padding:3px 9px; background:rgba(74,222,128,.12); color:#6EE7A0; border:1px solid rgba(74,222,128,.25); border-radius:20px; font-size:10.5px; font-weight:700; letter-spacing:.04em;">EXCLUSIVO</span>
+        </div>
+        <div style="font-family:'Archivo',sans-serif; font-weight:700; font-size:16.5px; margin-top:16px; color:#F3F7F3;">Mapa satelital</div>
+        <p style="font-size:13.5px; line-height:1.5; color:#8FA396; margin:8px 0 0;">Dibujás los lotes sobre el campo real. Ves animales y oferta forrajera por potrero.</p>
+      </div>
+
+      <div style="background:rgba(255,255,255,.025); border:1px solid rgba(255,255,255,.08); border-radius:18px; padding:22px;" style-hover="border-color:rgba(74,222,128,.35);">
+        <div style="display:flex; align-items:center; justify-content:space-between;">
+          <div style="width:46px;height:46px;border-radius:12px;background:rgba(201,154,58,.12);border:1px solid rgba(201,154,58,.22);display:flex;align-items:center;justify-content:center;"><i data-lucide="trending-up" style="width:23px;height:23px;color:#E0B450;"></i></div>
+          <span style="padding:3px 9px; background:rgba(74,222,128,.12); color:#6EE7A0; border:1px solid rgba(74,222,128,.25); border-radius:20px; font-size:10.5px; font-weight:700; letter-spacing:.04em;">EXCLUSIVO</span>
+        </div>
+        <div style="font-family:'Archivo',sans-serif; font-weight:700; font-size:16.5px; margin-top:16px; color:#F3F7F3;">Precio del ternero</div>
+        <p style="font-size:13.5px; line-height:1.5; color:#8FA396; margin:8px 0 0;">Gráfico histórico con alerta de cuándo es el momento ideal para vender.</p>
+      </div>
+
+      <div style="background:rgba(255,255,255,.025); border:1px solid rgba(255,255,255,.08); border-radius:18px; padding:22px;" style-hover="border-color:rgba(74,222,128,.35);">
+        <div style="display:flex; align-items:center; justify-content:space-between;">
+          <div style="width:46px;height:46px;border-radius:12px;background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.2);display:flex;align-items:center;justify-content:center;"><i data-lucide="stethoscope" style="width:23px;height:23px;color:#4ADE80;"></i></div>
+          <span style="padding:3px 9px; background:rgba(74,222,128,.12); color:#6EE7A0; border:1px solid rgba(74,222,128,.25); border-radius:20px; font-size:10.5px; font-weight:700; letter-spacing:.04em;">EXCLUSIVO</span>
+        </div>
+        <div style="font-family:'Archivo',sans-serif; font-weight:700; font-size:16.5px; margin-top:16px; color:#F3F7F3;">Diagnóstico técnico</div>
+        <p style="font-size:13.5px; line-height:1.5; color:#8FA396; margin:8px 0 0;">5 áreas con puntaje 0-100 y prioridades de mejora ordenadas por impacto económico.</p>
+      </div>
+
+      <div style="background:rgba(255,255,255,.025); border:1px solid rgba(255,255,255,.08); border-radius:18px; padding:22px;" style-hover="border-color:rgba(74,222,128,.35);">
+        <div style="display:flex; align-items:center; justify-content:space-between;">
+          <div style="width:46px;height:46px;border-radius:12px;background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.2);display:flex;align-items:center;justify-content:center;"><i data-lucide="message-circle" style="width:23px;height:23px;color:#4ADE80;"></i></div>
+          <span style="padding:3px 9px; background:rgba(255,255,255,.06); color:#9DB2A4; border:1px solid rgba(255,255,255,.12); border-radius:20px; font-size:10.5px; font-weight:700; letter-spacing:.04em;">INCLUIDO</span>
+        </div>
+        <div style="font-family:'Archivo',sans-serif; font-weight:700; font-size:16.5px; margin-top:16px; color:#F3F7F3;">Chat del campo</div>
+        <p style="font-size:13.5px; line-height:1.5; color:#8FA396; margin:8px 0 0;">El peón escribe lo que pasó en el campo y el sistema lo registra automáticamente.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== EXPLORER ===== -->
+  <section id="explorar" style="max-width:1200px; margin:0 auto; padding:54px 28px;">
+    <div style="text-align:center; margin-bottom:36px;">
+      <div style="font-size:13px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#4ADE80;">Funciones</div>
+      <h2 style="font-family:'Archivo',sans-serif; font-weight:800; font-size:34px; letter-spacing:-.01em; margin:10px 0 6px; color:#F3F7F3;">Explorá la app sin entrar</h2>
+      <p style="font-size:15px; color:#8FA396; margin:0;">Tocá cualquier módulo y mirá un ejemplo real de cómo funciona.</p>
+    </div>
+
+    <div style="display:grid; grid-template-columns:300px 1fr; gap:20px; align-items:start;">
+
+      <!-- module list -->
+      <div style="background:rgba(255,255,255,.02); border:1px solid rgba(255,255,255,.08); border-radius:18px; padding:10px; display:flex; flex-direction:column; gap:2px;">
+        <sc-for list="{{ funcList }}" as="f" hint-placeholder-count="12">
+          <button onClick="{{ f.onSelect }}" style="width:100%; display:flex; align-items:center; gap:11px; padding:11px 13px; border:0; border-radius:11px; cursor:pointer; text-align:left; font-family:'Public Sans',sans-serif; background:{{ f.itemBg }};">
+            <i data-lucide="{{ f.icon }}" style="width:18px; height:18px; flex:none; color:{{ f.iconColor }};"></i>
+            <span style="flex:1; font-size:13.5px; font-weight:600; color:{{ f.labelColor }};">{{ f.label }}</span>
+            <i data-lucide="chevron-right" style="width:15px; height:15px; color:{{ f.chevColor }};"></i>
+          </button>
+        </sc-for>
+      </div>
+
+      <!-- preview frame -->
+      <div style="background:rgba(18,28,22,.7); border:1px solid rgba(255,255,255,.1); border-radius:18px; overflow:hidden; box-shadow:0 30px 70px -28px rgba(0,0,0,.7);">
+        <!-- window bar -->
+        <div style="display:flex; align-items:center; gap:10px; padding:13px 18px; border-bottom:1px solid rgba(255,255,255,.08);">
+          <span style="display:flex; gap:6px;"><span style="width:11px;height:11px;border-radius:50%;background:#3A4A40;"></span><span style="width:11px;height:11px;border-radius:50%;background:#3A4A40;"></span><span style="width:11px;height:11px;border-radius:50%;background:#3A4A40;"></span></span>
+          <div style="margin-left:6px; display:flex; align-items:center; gap:8px;">
+            <i data-lucide="{{ funcIcon }}" style="width:16px; height:16px; color:#4ADE80;"></i>
+            <span style="font-family:'Archivo',sans-serif; font-weight:700; font-size:13.5px; color:#F3F7F3;">{{ funcTitle }}</span>
+          </div>
+          <span style="margin-left:auto; font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:#5E7466; letter-spacing:.08em;">VISTA PREVIA</span>
+        </div>
+
+        <!-- preview body -->
+        <div style="padding:20px; min-height:392px; position:relative;">
+
+          <!-- MAPA -->
+          <sc-if value="{{ sel.mapa }}" hint-placeholder-val="{{ true }}">
+          <div>
+            <svg viewBox="0 0 460 250" style="width:100%; height:248px; border-radius:12px; background:#0E1A14; display:block; border:1px solid rgba(255,255,255,.06);">
+              <defs><pattern id="mg" width="34" height="34" patternUnits="userSpaceOnUse"><path d="M34 0H0V34" fill="none" stroke="rgba(255,255,255,.05)" stroke-width="1"></path></pattern></defs>
+              <rect width="460" height="250" fill="url(#mg)"></rect>
+              <polygon points="40,38 175,28 200,120 70,148" fill="rgba(74,222,128,.22)" stroke="#4ADE80" stroke-width="2"></polygon>
+              <polygon points="210,52 360,44 392,150 232,150" fill="rgba(201,154,58,.2)" stroke="#E0B450" stroke-width="2"></polygon>
+              <polygon points="80,165 215,168 196,224 100,222" fill="rgba(194,87,56,.2)" stroke="#D8744F" stroke-width="2"></polygon>
+              <text x="108" y="96" fill="#CDEBD7" font-family="IBM Plex Mono, monospace" font-size="12" font-weight="600">Potrero 1</text>
+              <text x="280" y="104" fill="#F0DCAE" font-family="IBM Plex Mono, monospace" font-size="12" font-weight="600">Potrero 4</text>
+              <text x="120" y="200" fill="#F0C4B2" font-family="IBM Plex Mono, monospace" font-size="12" font-weight="600">Potrero 7</text>
+            </svg>
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-top:14px;">
+              <div style="display:flex; gap:16px; font-size:12px; color:#9DB2A4;">
+                <span style="display:flex;align-items:center;gap:6px;"><span style="width:10px;height:10px;border-radius:3px;background:#4ADE80;"></span>Buen pasto</span>
+                <span style="display:flex;align-items:center;gap:6px;"><span style="width:10px;height:10px;border-radius:3px;background:#E0B450;"></span>Moderado</span>
+                <span style="display:flex;align-items:center;gap:6px;"><span style="width:10px;height:10px;border-radius:3px;background:#D8744F;"></span>Bajo pasto</span>
+              </div>
+              <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#C7D2C9;">3 lotes · 248 ha · carga 0,82 EV/ha</span>
+            </div>
+          </div>
+          </sc-if>
+
+          <!-- PRECIO -->
+          <sc-if value="{{ sel.precio }}" hint-placeholder-val="{{ false }}">
+          <div>
+            <div style="display:flex; align-items:flex-end; justify-content:space-between;">
+              <div>
+                <div style="font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:30px; color:#F3F7F3;">$4.488<span style="font-size:15px; color:#8FA396;">/kg</span></div>
+                <div style="font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:#8FA396; margin-top:3px;">U$S 3,74/kg · TC blue $1.200</div>
+              </div>
+              <span style="display:inline-flex; align-items:center; gap:4px; padding:4px 11px; background:rgba(74,222,128,.12); color:#6EE7A0; border-radius:20px; font-size:13px; font-weight:700; font-family:'IBM Plex Mono',monospace;">▲ +2,3%</span>
+            </div>
+            <svg viewBox="0 0 360 90" preserveAspectRatio="none" style="width:100%; height:170px; margin-top:14px; display:block;">
+              <defs><linearGradient id="pf" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#4ADE80" stop-opacity=".26"></stop><stop offset="100%" stop-color="#4ADE80" stop-opacity="0"></stop></linearGradient></defs>
+              <path d="{{ areaPath }}" fill="url(#pf)"></path>
+              <polyline points="{{ linePoints }}" fill="none" stroke="#4ADE80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="filter:drop-shadow(0 0 5px rgba(74,222,128,.6));"></polyline>
+              <circle cx="{{ lastX }}" cy="{{ lastY }}" r="3.5" fill="#0C1410" stroke="#4ADE80" stroke-width="2"></circle>
+            </svg>
+            <div style="display:flex; align-items:center; gap:7px; margin-top:16px; padding:11px 14px; background:rgba(74,222,128,.08); border:1px solid rgba(74,222,128,.18); border-radius:11px;"><i data-lucide="circle-check" style="width:16px;height:16px;color:#4ADE80;"></i><span style="font-size:13px; font-weight:600; color:#6EE7A0;">Precio alto — momento ideal para vender. +17,7% sobre el promedio.</span></div>
+          </div>
+          </sc-if>
+
+          <!-- RODEO -->
+          <sc-if value="{{ sel.rodeo }}" hint-placeholder-val="{{ false }}">
+          <div>
+            <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:16px;">
+              <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:12px;"><div style="font-size:11px;color:#7E9484;">Vacas</div><div style="font-family:'Archivo',sans-serif;font-weight:800;font-size:21px;color:#F3F7F3;margin-top:3px;">312</div></div>
+              <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:12px;"><div style="font-size:11px;color:#7E9484;">Vaquillonas</div><div style="font-family:'Archivo',sans-serif;font-weight:800;font-size:21px;color:#F3F7F3;margin-top:3px;">78</div></div>
+              <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:12px;"><div style="font-size:11px;color:#7E9484;">Terneros</div><div style="font-family:'Archivo',sans-serif;font-weight:800;font-size:21px;color:#F3F7F3;margin-top:3px;">74</div></div>
+              <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:12px;"><div style="font-size:11px;color:#7E9484;">Toros</div><div style="font-family:'Archivo',sans-serif;font-weight:800;font-size:21px;color:#F3F7F3;margin-top:3px;">23</div></div>
+            </div>
+            <div style="display:flex; align-items:center; padding:9px 14px; font-family:'IBM Plex Mono',monospace; font-size:11px; color:#5E7466; letter-spacing:.04em;"><span style="flex:1;">CARAVANA</span><span style="width:96px;">CATEGORÍA</span><span style="width:64px; text-align:right;">PESO</span><span style="width:96px; text-align:right;">ESTADO</span></div>
+            <div style="display:flex; align-items:center; padding:11px 14px; background:rgba(255,255,255,.03); border-radius:10px; margin-bottom:6px;"><span style="flex:1; font-family:'IBM Plex Mono',monospace; font-size:13px; color:#F3F7F3;">AR-0045</span><span style="width:96px; font-size:13px; color:#C7D2C9;">Vaca</span><span style="width:64px; text-align:right; font-family:'IBM Plex Mono',monospace; font-size:13px; color:#C7D2C9;">412kg</span><span style="width:96px; text-align:right;"><span style="padding:2px 9px; background:rgba(74,222,128,.14); color:#6EE7A0; border-radius:14px; font-size:11px; font-weight:600;">Preñada</span></span></div>
+            <div style="display:flex; align-items:center; padding:11px 14px; background:rgba(255,255,255,.03); border-radius:10px; margin-bottom:6px;"><span style="flex:1; font-family:'IBM Plex Mono',monospace; font-size:13px; color:#F3F7F3;">AR-0012</span><span style="width:96px; font-size:13px; color:#C7D2C9;">Vaquillona</span><span style="width:64px; text-align:right; font-family:'IBM Plex Mono',monospace; font-size:13px; color:#C7D2C9;">318kg</span><span style="width:96px; text-align:right;"><span style="padding:2px 9px; background:rgba(201,154,58,.16); color:#E0B450; border-radius:14px; font-size:11px; font-weight:600;">En servicio</span></span></div>
+            <div style="display:flex; align-items:center; padding:11px 14px; background:rgba(255,255,255,.03); border-radius:10px;"><span style="flex:1; font-family:'IBM Plex Mono',monospace; font-size:13px; color:#F3F7F3;">AR-0103</span><span style="width:96px; font-size:13px; color:#C7D2C9;">Ternero</span><span style="width:64px; text-align:right; font-family:'IBM Plex Mono',monospace; font-size:13px; color:#C7D2C9;">165kg</span><span style="width:96px; text-align:right;"><span style="padding:2px 9px; background:rgba(255,255,255,.08); color:#9DB2A4; border-radius:14px; font-size:11px; font-weight:600;">Al pie</span></span></div>
+          </div>
+          </sc-if>
+
+          <!-- SANIDAD -->
+          <sc-if value="{{ sel.sanidad }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <div style="display:flex; gap:13px; align-items:center; padding:14px; background:rgba(194,87,56,.08); border:1px solid rgba(194,87,56,.22); border-radius:12px;">
+              <div style="width:46px; text-align:center; flex:none;"><div style="font-family:'Archivo',sans-serif; font-weight:800; font-size:18px; color:#D8744F;">27</div><div style="font-size:10px; color:#9DB2A4; text-transform:uppercase;">Jun</div></div>
+              <div style="flex:1;"><div style="font-size:13.5px; font-weight:600; color:#F3F7F3;">Vacunación aftosa</div><div style="font-size:11.5px; color:#9DB2A4; margin-top:2px;">Obligatoria SENASA · todo el rodeo</div></div>
+              <span style="padding:3px 10px; background:rgba(194,87,56,.18); color:#E8957B; border-radius:14px; font-size:11px; font-weight:600;">Vence en 9 días</span>
+            </div>
+            <div style="display:flex; gap:13px; align-items:center; padding:14px; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.06); border-radius:12px;">
+              <div style="width:46px; text-align:center; flex:none;"><div style="font-family:'Archivo',sans-serif; font-weight:800; font-size:18px; color:#4ADE80;">11</div><div style="font-size:10px; color:#9DB2A4; text-transform:uppercase;">Jul</div></div>
+              <div style="flex:1;"><div style="font-size:13.5px; font-weight:600; color:#F3F7F3;">Vacunación clostridial</div><div style="font-size:11.5px; color:#9DB2A4; margin-top:2px;">Recomendada · terneros y vaquillonas</div></div>
+              <span style="padding:3px 10px; background:rgba(255,255,255,.06); color:#9DB2A4; border-radius:14px; font-size:11px; font-weight:600;">Programado</span>
+            </div>
+            <div style="display:flex; gap:13px; align-items:center; padding:14px; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.06); border-radius:12px;">
+              <div style="width:46px; text-align:center; flex:none;"><div style="font-family:'Archivo',sans-serif; font-weight:800; font-size:18px; color:#8FA396;">02</div><div style="font-size:10px; color:#9DB2A4; text-transform:uppercase;">May</div></div>
+              <div style="flex:1;"><div style="font-size:13.5px; font-weight:600; color:#F3F7F3;">Desparasitación (ivermectina)</div><div style="font-size:11.5px; color:#9DB2A4; margin-top:2px;">Realizada · 487 animales · $1,4M</div></div>
+              <span style="padding:3px 10px; background:rgba(74,222,128,.14); color:#6EE7A0; border-radius:14px; font-size:11px; font-weight:600;">Hecho ✓</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px; margin-top:4px; padding:11px 14px; background:rgba(74,222,128,.06); border-radius:11px;"><i data-lucide="info" style="width:15px;height:15px;color:#4ADE80;"></i><span style="font-size:12.5px; color:#9DB2A4;">Calendario generado por zona · Fuente SENASA · INTA Concepción del Uruguay</span></div>
+          </div>
+          </sc-if>
+
+          <!-- FORRAJE -->
+          <sc-if value="{{ sel.forraje }}" hint-placeholder-val="{{ false }}">
+          <div>
+            <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:16px;">
+              <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:12px;"><div style="font-size:11px;color:#7E9484;">Superficie</div><div style="font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:19px;color:#F3F7F3;margin-top:3px;">248 ha</div></div>
+              <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:12px;"><div style="font-size:11px;color:#7E9484;">Lluvia mes</div><div style="font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:19px;color:#F3F7F3;margin-top:3px;">112 mm</div></div>
+              <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:12px;"><div style="font-size:11px;color:#7E9484;">Carga</div><div style="font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:19px;color:#4ADE80;margin-top:3px;">0,82</div></div>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:11px;">
+              <div><div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:6px;"><span style="display:flex;align-items:center;gap:7px;color:#C7D2C9;"><span style="width:9px;height:9px;border-radius:50%;background:#4ADE80;"></span>Potrero 1 · festuca</span><span style="font-family:'IBM Plex Mono',monospace;color:#8FA396;">0,95 EV/ha</span></div><div style="height:8px; background:rgba(255,255,255,.06); border-radius:6px; overflow:hidden;"><div style="height:100%; width:88%; background:#4ADE80; border-radius:6px;"></div></div></div>
+              <div><div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:6px;"><span style="display:flex;align-items:center;gap:7px;color:#C7D2C9;"><span style="width:9px;height:9px;border-radius:50%;background:#E0B450;"></span>Potrero 4 · campo natural</span><span style="font-family:'IBM Plex Mono',monospace;color:#8FA396;">0,62 EV/ha</span></div><div style="height:8px; background:rgba(255,255,255,.06); border-radius:6px; overflow:hidden;"><div style="height:100%; width:58%; background:#E0B450; border-radius:6px;"></div></div></div>
+              <div><div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:6px;"><span style="display:flex;align-items:center;gap:7px;color:#C7D2C9;"><span style="width:9px;height:9px;border-radius:50%;background:#D8744F;"></span>Potrero 7 · pasto bajo</span><span style="font-family:'IBM Plex Mono',monospace;color:#8FA396;">0,34 EV/ha</span></div><div style="height:8px; background:rgba(255,255,255,.06); border-radius:6px; overflow:hidden;"><div style="height:100%; width:30%; background:#D8744F; border-radius:6px;"></div></div></div>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px; margin-top:16px; padding:11px 14px; background:rgba(201,154,58,.08); border:1px solid rgba(201,154,58,.18); border-radius:11px;"><i data-lucide="triangle-alert" style="width:15px;height:15px;color:#E0B450;"></i><span style="font-size:12.5px; color:#E0B450; font-weight:600;">Potrero 7 con pasto bajo — conviene mover la hacienda.</span></div>
+          </div>
+          </sc-if>
+
+          <!-- ECONOMIA -->
+          <sc-if value="{{ sel.economia }}" hint-placeholder-val="{{ false }}">
+          <div>
+            <div style="display:flex; gap:14px; align-items:flex-end; height:180px; padding:0 10px;">
+              <div style="flex:1; display:flex; flex-direction:column; align-items:center; height:100%; justify-content:flex-end;"><span style="font-family:'IBM Plex Mono',monospace; font-size:13px; color:#C7D2C9; margin-bottom:8px;">$48,2M</span><div style="width:100%; height:100%; background:linear-gradient(180deg,#4ADE80,#2E6B43); border-radius:10px 10px 0 0;"></div><span style="font-size:12px; color:#9DB2A4; margin-top:9px;">Ingreso</span></div>
+              <div style="flex:1; display:flex; flex-direction:column; align-items:center; height:100%; justify-content:flex-end;"><span style="font-family:'IBM Plex Mono',monospace; font-size:13px; color:#C7D2C9; margin-bottom:8px;">$24,7M</span><div style="width:100%; height:51%; background:rgba(216,116,79,.45); border:1px solid rgba(216,116,79,.5); border-radius:10px 10px 0 0;"></div><span style="font-size:12px; color:#9DB2A4; margin-top:9px;">Egreso</span></div>
+              <div style="flex:1; display:flex; flex-direction:column; align-items:center; height:100%; justify-content:flex-end;"><span style="font-family:'IBM Plex Mono',monospace; font-size:13px; color:#6EE7A0; margin-bottom:8px;">$23,5M</span><div style="width:100%; height:49%; background:rgba(74,222,128,.22); border:1px solid rgba(74,222,128,.4); border-radius:10px 10px 0 0;"></div><span style="font-size:12px; color:#9DB2A4; margin-top:9px;">Margen</span></div>
+            </div>
+            <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-top:20px;">
+              <div style="display:flex; justify-content:space-between; padding:11px 14px; background:rgba(255,255,255,.03); border-radius:10px; font-size:13px;"><span style="color:#9DB2A4;">Margen bruto USD</span><span style="font-family:'IBM Plex Mono',monospace; color:#F3F7F3;">U$S 19.583</span></div>
+              <div style="display:flex; justify-content:space-between; padding:11px 14px; background:rgba(255,255,255,.03); border-radius:10px; font-size:13px;"><span style="color:#9DB2A4;">Margen / ha</span><span style="font-family:'IBM Plex Mono',monospace; color:#4ADE80;">$31.420</span></div>
+            </div>
+          </div>
+          </sc-if>
+
+          <!-- CLIMA -->
+          <sc-if value="{{ sel.clima }}" hint-placeholder-val="{{ false }}">
+          <div>
+            <div style="display:flex; align-items:center; gap:16px; padding:18px; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.06); border-radius:14px;">
+              <i data-lucide="cloud-sun" style="width:46px; height:46px; color:#E0B450;"></i>
+              <div style="flex:1;"><div style="font-family:'Archivo',sans-serif; font-weight:800; font-size:34px; color:#F3F7F3; line-height:1;">18°<span style="font-size:16px; color:#8FA396;"> / 7°</span></div><div style="font-size:13px; color:#9DB2A4; margin-top:4px;">Gualeguaychú · Parcialmente nublado</div></div>
+              <div style="text-align:right; font-family:'IBM Plex Mono',monospace;"><div style="font-size:13px; color:#6EE7A0;">Lluvia hoy 2mm</div><div style="font-size:13px; color:#9DB2A4; margin-top:3px;">Mañana 14mm</div></div>
+            </div>
+            <div style="display:grid; grid-template-columns:repeat(7,1fr); gap:8px; margin-top:14px;">
+              <div style="text-align:center; padding:12px 4px; background:rgba(255,255,255,.03); border-radius:10px;"><div style="font-size:11px; color:#9DB2A4;">Hoy</div><i data-lucide="cloud-sun" style="width:20px;height:20px;color:#E0B450;margin:7px 0;"></i><div style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#F3F7F3;">18°</div></div>
+              <div style="text-align:center; padding:12px 4px; background:rgba(255,255,255,.03); border-radius:10px;"><div style="font-size:11px; color:#9DB2A4;">Jue</div><i data-lucide="cloud-rain" style="width:20px;height:20px;color:#7DB8E8;margin:7px 0;"></i><div style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#F3F7F3;">15°</div></div>
+              <div style="text-align:center; padding:12px 4px; background:rgba(255,255,255,.03); border-radius:10px;"><div style="font-size:11px; color:#9DB2A4;">Vie</div><i data-lucide="cloud-rain" style="width:20px;height:20px;color:#7DB8E8;margin:7px 0;"></i><div style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#F3F7F3;">14°</div></div>
+              <div style="text-align:center; padding:12px 4px; background:rgba(255,255,255,.03); border-radius:10px;"><div style="font-size:11px; color:#9DB2A4;">Sáb</div><i data-lucide="sun" style="width:20px;height:20px;color:#E0B450;margin:7px 0;"></i><div style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#F3F7F3;">20°</div></div>
+              <div style="text-align:center; padding:12px 4px; background:rgba(255,255,255,.03); border-radius:10px;"><div style="font-size:11px; color:#9DB2A4;">Dom</div><i data-lucide="sun" style="width:20px;height:20px;color:#E0B450;margin:7px 0;"></i><div style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#F3F7F3;">22°</div></div>
+              <div style="text-align:center; padding:12px 4px; background:rgba(255,255,255,.03); border-radius:10px;"><div style="font-size:11px; color:#9DB2A4;">Lun</div><i data-lucide="cloud" style="width:20px;height:20px;color:#9DB2A4;margin:7px 0;"></i><div style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#F3F7F3;">19°</div></div>
+              <div style="text-align:center; padding:12px 4px; background:rgba(255,255,255,.03); border-radius:10px;"><div style="font-size:11px; color:#9DB2A4;">Mar</div><i data-lucide="cloud-sun" style="width:20px;height:20px;color:#E0B450;margin:7px 0;"></i><div style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#F3F7F3;">21°</div></div>
+            </div>
+            <div style="text-align:center; font-size:11.5px; color:#5E7466; margin-top:14px; font-family:'IBM Plex Mono',monospace;">Fuente: Open-Meteo · actualización automática por GPS</div>
+          </div>
+          </sc-if>
+
+          <!-- CALCULADORA -->
+          <sc-if value="{{ sel.calculadora }}" hint-placeholder-val="{{ false }}">
+          <div>
+            <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:12px;">
+              <div style="background:rgba(74,222,128,.06); border:1px solid rgba(74,222,128,.2); border-radius:14px; padding:16px;"><div style="font-size:11.5px; color:#8FA396;">Margen bruto</div><div style="font-family:'Archivo',sans-serif; font-weight:800; font-size:26px; color:#4ADE80; margin-top:6px;">$23,5M</div></div>
+              <div style="background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.06); border-radius:14px; padding:16px;"><div style="font-size:11.5px; color:#8FA396;">Rentabilidad</div><div style="font-family:'Archivo',sans-serif; font-weight:800; font-size:26px; color:#F3F7F3; margin-top:6px;">14,2%</div></div>
+              <div style="background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.06); border-radius:14px; padding:16px;"><div style="font-size:11.5px; color:#8FA396;">Margen / ha</div><div style="font-family:'Archivo',sans-serif; font-weight:800; font-size:26px; color:#E0B450; margin-top:6px;">$31,4k</div></div>
+            </div>
+            <div style="margin-top:14px; display:flex; flex-direction:column; gap:8px;">
+              <div style="display:flex; justify-content:space-between; padding:11px 14px; background:rgba(255,255,255,.03); border-radius:10px; font-size:13px;"><span style="color:#9DB2A4;">Producto logrado</span><span style="font-family:'IBM Plex Mono',monospace; color:#F3F7F3;">82.300 kg</span></div>
+              <div style="display:flex; justify-content:space-between; padding:11px 14px; background:rgba(255,255,255,.03); border-radius:10px; font-size:13px;"><span style="color:#9DB2A4;">Costo por kg producido</span><span style="font-family:'IBM Plex Mono',monospace; color:#F3F7F3;">$3.840/kg</span></div>
+              <div style="display:flex; justify-content:space-between; padding:11px 14px; background:rgba(255,255,255,.03); border-radius:10px; font-size:13px;"><span style="color:#9DB2A4;">Precio de equilibrio</span><span style="font-family:'IBM Plex Mono',monospace; color:#6EE7A0;">$4.620/kg</span></div>
+            </div>
+            <div style="text-align:center; font-size:12px; color:#5E7466; margin-top:14px;">Comparado con el promedio de Entre Ríos (INTA / CREA 2023)</div>
+          </div>
+          </sc-if>
+
+          <!-- DIAGNOSTICO -->
+          <sc-if value="{{ sel.diagnostico }}" hint-placeholder-val="{{ false }}">
+          <div>
+            <div style="display:flex; align-items:center; gap:18px; margin-bottom:18px; padding:16px; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.06); border-radius:14px;">
+              <div style="width:74px; height:74px; flex:none; border-radius:50%; background:conic-gradient(#4ADE80 0% 72%, rgba(255,255,255,.08) 72% 100%); display:flex; align-items:center; justify-content:center;"><div style="width:58px; height:58px; border-radius:50%; background:#121C16; display:flex; flex-direction:column; align-items:center; justify-content:center;"><span style="font-family:'Archivo',sans-serif; font-weight:800; font-size:22px; color:#F3F7F3;">72</span><span style="font-size:9px; color:#8FA396;">/100</span></div></div>
+              <div><div style="font-family:'Archivo',sans-serif; font-weight:700; font-size:16px; color:#F3F7F3;">Buen manejo general</div><div style="font-size:12.5px; color:#9DB2A4; margin-top:3px;">Principal mejora: reproducción → +$2,8M/año potencial</div></div>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:11px;">
+              <div><div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:5px;"><span style="color:#C7D2C9;">Reproducción</span><span style="font-family:'IBM Plex Mono',monospace; color:#E0B450;">58</span></div><div style="height:7px; background:rgba(255,255,255,.06); border-radius:6px; overflow:hidden;"><div style="height:100%; width:58%; background:#E0B450; border-radius:6px;"></div></div></div>
+              <div><div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:5px;"><span style="color:#C7D2C9;">Sanidad</span><span style="font-family:'IBM Plex Mono',monospace; color:#4ADE80;">81</span></div><div style="height:7px; background:rgba(255,255,255,.06); border-radius:6px; overflow:hidden;"><div style="height:100%; width:81%; background:#4ADE80; border-radius:6px;"></div></div></div>
+              <div><div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:5px;"><span style="color:#C7D2C9;">Forraje</span><span style="font-family:'IBM Plex Mono',monospace; color:#4ADE80;">76</span></div><div style="height:7px; background:rgba(255,255,255,.06); border-radius:6px; overflow:hidden;"><div style="height:100%; width:76%; background:#4ADE80; border-radius:6px;"></div></div></div>
+              <div><div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:5px;"><span style="color:#C7D2C9;">Economía</span><span style="font-family:'IBM Plex Mono',monospace; color:#E0B450;">69</span></div><div style="height:7px; background:rgba(255,255,255,.06); border-radius:6px; overflow:hidden;"><div style="height:100%; width:69%; background:#E0B450; border-radius:6px;"></div></div></div>
+            </div>
+          </div>
+          </sc-if>
+
+          <!-- ASISTENTE -->
+          <sc-if value="{{ sel.asistente }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex; flex-direction:column; gap:12px;">
+            <div style="align-self:flex-end; max-width:78%; padding:12px 15px; background:#4ADE80; color:#0C1410; border-radius:14px 14px 4px 14px; font-size:13.5px; font-weight:500;">¿Cuándo me conviene vender los terneros?</div>
+            <div style="display:flex; gap:10px; align-items:flex-start; max-width:88%;">
+              <div style="width:30px; height:30px; flex:none; border-radius:9px; background:rgba(74,222,128,.12); display:flex; align-items:center; justify-content:center;"><i data-lucide="sprout" style="width:16px;height:16px;color:#4ADE80;"></i></div>
+              <div style="padding:12px 15px; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.07); color:#D7DED8; border-radius:14px 14px 14px 4px; font-size:13.5px; line-height:1.5;">Hoy el ternero está a <b style="color:#6EE7A0;">$4.488/kg</b>, un 17,7% sobre el promedio histórico. Es un buen momento para vender. Si esperás, el clima seco previsto podría bajar el peso de venta.</div>
+            </div>
+            <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:4px;">
+              <span style="padding:7px 13px; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.09); border-radius:18px; font-size:12.5px; color:#9DB2A4;">Vacunas obligatorias</span>
+              <span style="padding:7px 13px; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.09); border-radius:18px; font-size:12.5px; color:#9DB2A4;">Mejorar preñez</span>
+              <span style="padding:7px 13px; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.09); border-radius:18px; font-size:12.5px; color:#9DB2A4;">Carga animal</span>
+            </div>
+          </div>
+          </sc-if>
+
+          <!-- TRABAJADOR -->
+          <sc-if value="{{ sel.trabajador }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex; flex-direction:column; gap:11px;">
+            <div style="align-self:flex-end; max-width:78%; padding:11px 15px; background:#4ADE80; color:#0C1410; border-radius:14px 14px 4px 14px; font-size:13.5px; font-weight:500;">Nació ternero de AR-0045 🐄</div>
+            <div style="align-self:flex-start; display:flex; gap:8px; align-items:center;"><i data-lucide="circle-check" style="width:15px;height:15px;color:#4ADE80;"></i><span style="font-size:12px; color:#8FA396;">Registrado: nacimiento · madre AR-0045 · +1 ternero al rodeo</span></div>
+            <div style="align-self:flex-end; max-width:78%; padding:11px 15px; background:#4ADE80; color:#0C1410; border-radius:14px 14px 4px 14px; font-size:13.5px; font-weight:500;">Cayeron 45mm hoy 🌧</div>
+            <div style="align-self:flex-start; display:flex; gap:8px; align-items:center;"><i data-lucide="circle-check" style="width:15px;height:15px;color:#4ADE80;"></i><span style="font-size:12px; color:#8FA396;">Registrado: lluvia 45mm · acumulado mes 112mm</span></div>
+            <div style="align-self:flex-end; max-width:78%; padding:11px 15px; background:#4ADE80; color:#0C1410; border-radius:14px 14px 4px 14px; font-size:13.5px; font-weight:500;">Moví las vacas al potrero 3 🌾</div>
+            <div style="align-self:flex-start; display:flex; gap:8px; align-items:center;"><i data-lucide="circle-check" style="width:15px;height:15px;color:#4ADE80;"></i><span style="font-size:12px; color:#8FA396;">Registrado: movimiento de hacienda → Potrero 3</span></div>
+            <div style="display:flex; align-items:center; gap:8px; margin-top:6px; padding:11px 14px; background:rgba(74,222,128,.06); border-radius:11px;"><i data-lucide="lock" style="width:15px;height:15px;color:#4ADE80;"></i><span style="font-size:12.5px; color:#9DB2A4;">El trabajador <b style="color:#C7D2C9;">no ve</b> precios ni datos económicos.</span></div>
+          </div>
+          </sc-if>
+
+          <!-- BENCHMARKING -->
+          <sc-if value="{{ sel.benchmarking }}" hint-placeholder-val="{{ false }}">
+          <div>
+            <div style="display:flex; align-items:center; gap:14px; margin-bottom:18px; padding:16px; background:rgba(74,222,128,.06); border:1px solid rgba(74,222,128,.2); border-radius:14px;">
+              <i data-lucide="trophy" style="width:32px; height:32px; color:#E0B450;"></i>
+              <div><div style="font-family:'Archivo',sans-serif; font-weight:800; font-size:20px; color:#F3F7F3;">Top 18% de tu zona</div><div style="font-size:12.5px; color:#9DB2A4; margin-top:2px;">Gualeguaychú · 47 productores · 100% anónimo</div></div>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:14px;">
+              <div><div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:6px;"><span style="color:#C7D2C9;">Tu preñez</span><span style="font-family:'IBM Plex Mono',monospace; color:#6EE7A0;">85%</span></div><div style="position:relative; height:9px; background:rgba(255,255,255,.06); border-radius:6px;"><div style="height:100%; width:85%; background:#4ADE80; border-radius:6px;"></div><div style="position:absolute; top:-3px; left:82%; width:2px; height:15px; background:#E0B450;"></div></div><div style="font-size:11px; color:#5E7466; margin-top:4px; font-family:'IBM Plex Mono',monospace;">prom. zona 82%</div></div>
+              <div><div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:6px;"><span style="color:#C7D2C9;">Margen bruto/ha</span><span style="font-family:'IBM Plex Mono',monospace; color:#6EE7A0;">$31,4k</span></div><div style="position:relative; height:9px; background:rgba(255,255,255,.06); border-radius:6px;"><div style="height:100%; width:74%; background:#4ADE80; border-radius:6px;"></div><div style="position:absolute; top:-3px; left:64%; width:2px; height:15px; background:#E0B450;"></div></div><div style="font-size:11px; color:#5E7466; margin-top:4px; font-family:'IBM Plex Mono',monospace;">prom. zona $27,1k</div></div>
+            </div>
+          </div>
+          </sc-if>
+
+        </div>
+
+        <!-- frame footer -->
+        <div style="display:flex; align-items:center; gap:12px; padding:14px 18px; border-top:1px solid rgba(255,255,255,.08); background:rgba(255,255,255,.02);">
+          <div style="flex:1;"><div style="font-size:13.5px; font-weight:700; color:#F3F7F3;">{{ funcTitle }}</div><div style="font-size:12px; color:#8FA396; margin-top:1px;">{{ funcDesc }}</div></div>
+          <a href="app.html" style="display:flex; align-items:center; gap:7px; height:38px; padding:0 16px; background:rgba(74,222,128,.12); color:#6EE7A0; border:1px solid rgba(74,222,128,.3); border-radius:10px; text-decoration:none; font-size:13px; font-weight:600; flex:none;" style-hover="background:rgba(74,222,128,.2);">Abrir módulo <i data-lucide="arrow-up-right" style="width:15px;height:15px;"></i></a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== PRICING ===== -->
+  <section id="planes" style="max-width:1100px; margin:0 auto; padding:54px 28px;">
+    <div style="text-align:center; margin-bottom:38px;">
+      <div style="font-size:13px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#4ADE80;">Planes</div>
+      <h2 style="font-family:'Archivo',sans-serif; font-weight:800; font-size:34px; letter-spacing:-.01em; margin:10px 0 0; color:#F3F7F3;">Elegí tu plan</h2>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:18px; align-items:start;">
+
+      <div style="background:rgba(255,255,255,.025); border:1px solid rgba(255,255,255,.08); border-radius:20px; padding:26px;">
+        <div style="font-family:'Archivo',sans-serif; font-weight:700; font-size:17px; color:#F3F7F3;">Gratis</div>
+        <div style="display:flex; align-items:baseline; gap:6px; margin-top:12px;"><span style="font-family:'Archivo',sans-serif; font-weight:900; font-size:38px; color:#F3F7F3;">$0</span><span style="font-size:13px; color:#7E9484;">para siempre</span></div>
+        <a href="app.html" style="display:block; text-align:center; margin-top:18px; height:44px; line-height:44px; background:rgba(255,255,255,.05); color:#E8EEE9; border:1px solid rgba(255,255,255,.12); border-radius:11px; text-decoration:none; font-weight:700; font-size:14px;" style-hover="border-color:rgba(74,222,128,.4);">Empezar gratis</a>
+        <div style="height:1px; background:rgba(255,255,255,.08); margin:20px 0;"></div>
+        <sc-for list="{{ freePlan }}" as="f" hint-placeholder-count="5">
+          <div style="display:flex; align-items:center; gap:9px; padding:5px 0; font-size:13.5px; color:{{ f.color }};"><i data-lucide="{{ f.icon }}" style="width:16px;height:16px;color:{{ f.color }};flex:none;"></i> {{ f.text }}</div>
+        </sc-for>
+      </div>
+
+      <div style="background:linear-gradient(180deg,rgba(74,222,128,.08),rgba(255,255,255,.02)); border:1px solid rgba(74,222,128,.35); border-radius:20px; padding:26px; position:relative; box-shadow:0 0 40px -8px rgba(74,222,128,.25);">
+        <span style="position:absolute; top:-12px; left:50%; transform:translateX(-50%); padding:5px 14px; background:#4ADE80; color:#0C1410; border-radius:20px; font-size:11px; font-weight:800; letter-spacing:.04em; box-shadow:0 0 18px rgba(74,222,128,.5);">MÁS POPULAR</span>
+        <div style="font-family:'Archivo',sans-serif; font-weight:700; font-size:17px; color:#fff;">Plan Productor</div>
+        <div style="display:flex; align-items:baseline; gap:6px; margin-top:12px;"><span style="font-family:'Archivo',sans-serif; font-weight:900; font-size:34px; color:#fff;">A definir</span></div>
+        <div style="font-size:12.5px; color:#8FA396; margin-top:2px;">mensual · o anual con descuento</div>
+        <a href="app.html" style="display:block; text-align:center; margin-top:18px; height:44px; line-height:44px; background:#4ADE80; color:#0C1410; border-radius:11px; text-decoration:none; font-weight:700; font-size:14px; box-shadow:0 0 22px rgba(74,222,128,.35);" style-hover="background:#6EE7A0;">Comenzar ahora</a>
+        <div style="height:1px; background:rgba(255,255,255,.12); margin:20px 0;"></div>
+        <sc-for list="{{ proPlan }}" as="f" hint-placeholder-count="7">
+          <div style="display:flex; align-items:center; gap:9px; padding:5px 0; font-size:13.5px; color:#D7DED8;"><i data-lucide="check" style="width:16px;height:16px;color:#4ADE80;flex:none;"></i> {{ f }}</div>
+        </sc-for>
+      </div>
+
+      <div style="background:rgba(255,255,255,.025); border:1px solid rgba(255,255,255,.08); border-radius:20px; padding:26px;">
+        <div style="font-family:'Archivo',sans-serif; font-weight:700; font-size:17px; color:#F3F7F3;">Plan Asesor</div>
+        <div style="display:flex; align-items:baseline; gap:6px; margin-top:12px;"><span style="font-family:'Archivo',sans-serif; font-weight:900; font-size:34px; color:#F3F7F3;">A definir</span></div>
+        <div style="font-size:12.5px; color:#7E9484; margin-top:2px;">mensual · o anual con descuento</div>
+        <a href="#" style="display:block; text-align:center; margin-top:18px; height:44px; line-height:44px; background:rgba(255,255,255,.05); color:#E8EEE9; border:1px solid rgba(255,255,255,.12); border-radius:11px; text-decoration:none; font-weight:700; font-size:14px;" style-hover="border-color:rgba(74,222,128,.4);">Contactar</a>
+        <div style="height:1px; background:rgba(255,255,255,.08); margin:20px 0;"></div>
+        <sc-for list="{{ advPlan }}" as="f" hint-placeholder-count="6">
+          <div style="display:flex; align-items:center; gap:9px; padding:5px 0; font-size:13.5px; color:#C7D2C9;"><i data-lucide="check" style="width:16px;height:16px;color:#4ADE80;flex:none;"></i> {{ f }}</div>
+        </sc-for>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== FOOTER CTA ===== -->
+  <section style="position:relative; padding:64px 28px 44px;">
+    <div style="position:absolute; inset:0; background:radial-gradient(ellipse 60% 100% at 50% 0%,rgba(74,222,128,.12),transparent 70%); pointer-events:none;"></div>
+    <div style="position:relative; max-width:760px; margin:0 auto; text-align:center;">
+      <h2 style="font-family:'Archivo',sans-serif; font-weight:800; font-size:34px; color:#F3F7F3; letter-spacing:-.01em;">Tu campo, en tiempo real</h2>
+      <p style="font-size:16px; color:#8FA396; margin:14px 0 26px;">Conocé tu margen real en 5 minutos. Sin tarjeta, sin instalación.</p>
+      <a href="app.html" style="display:inline-flex; align-items:center; gap:8px; height:50px; padding:0 26px; background:#4ADE80; color:#0C1410; border-radius:12px; text-decoration:none; font-size:15px; font-weight:700; box-shadow:0 0 30px rgba(74,222,128,.4);" style-hover="background:#6EE7A0;">Ingresar al sistema <i data-lucide="arrow-right" style="width:17px;height:17px;"></i></a>
+    </div>
+    <div style="position:relative; max-width:1200px; margin:48px auto 0; padding-top:24px; border-top:1px solid rgba(255,255,255,.08); display:flex; align-items:center; gap:11px;">
+      <div style="width:30px; height:30px; border-radius:8px; background:linear-gradient(150deg,#4ADE80,#2E6B43); display:flex; align-items:center; justify-content:center;"><i data-lucide="sprout" style="width:16px;height:16px;color:#0C1410;"></i></div>
+      <span style="font-family:'Archivo',sans-serif; font-weight:700; font-size:14px; color:#F3F7F3; letter-spacing:.05em;">AGROGESTOR</span>
+      <span style="font-size:12.5px; color:#5E7466; margin-left:auto;">Gestión ganadera · Entre Ríos, Argentina</span>
+    </div>
+  </section>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:2400}}">
+class Component extends DCLogic {
+  state = { selectedFunc: 'mapa' };
+
+  FUNCS = [
+    { id:'mapa', icon:'map', label:'Mapa satelital', desc:'Dibujá tus lotes sobre el campo real y mirá animales y oferta forrajera por potrero.' },
+    { id:'precio', icon:'trending-up', label:'Precio del ternero', desc:'Evolución en pesos y dólares con alerta de cuándo es el momento ideal para vender.' },
+    { id:'rodeo', icon:'beef', label:'Rodeo', desc:'Cada animal por caravana, categoría, peso y estado reproductivo.' },
+    { id:'sanidad', icon:'syringe', label:'Sanidad', desc:'Calendario sanitario obligatorio y recomendado, generado por zona.' },
+    { id:'forraje', icon:'wheat', label:'Forraje', desc:'Potreros, lluvias y carga animal en EV/ha calculada por región.' },
+    { id:'economia', icon:'bar-chart-3', label:'Economía', desc:'Ingresos, egresos y margen bruto en pesos y dólares.' },
+    { id:'clima', icon:'cloud-sun', label:'Clima', desc:'Pronóstico de 7 días por el GPS exacto de tu campo.' },
+    { id:'calculadora', icon:'calculator', label:'Calculadora', desc:'La rentabilidad real de tu campo en 5 minutos, gratis y sin registro.' },
+    { id:'diagnostico', icon:'stethoscope', label:'Diagnóstico técnico', desc:'Puntaje 0-100 en 5 áreas con prioridades de mejora por impacto económico.' },
+    { id:'asistente', icon:'sparkles', label:'Asistente IA', desc:'Consultá manejo bovino, sanidad, forraje, precios y rentabilidad.' },
+    { id:'trabajador', icon:'hard-hat', label:'Modo trabajador', desc:'El peón registra desde el celular por chat, sin ver los datos económicos.' },
+    { id:'benchmarking', icon:'trophy', label:'Benchmarking', desc:'Compará tu campo con productores de tu zona, 100% anónimo.' },
+  ];
+
+  selectFunc(id) { this.setState({ selectedFunc: id }); }
+
+  componentDidMount() { this.renderIcons(); }
+  componentDidUpdate() { this.renderIcons(); }
+  renderIcons() {
+    const L = window.lucide;
+    if (!L || !L.createElement) { setTimeout(() => this.renderIcons(), 80); return; }
+    const hosts = document.querySelectorAll('i[data-lucide]');
+    for (let i = 0; i < hosts.length; i++) {
+      const h = hosts[i];
+      const name = h.getAttribute('data-lucide');
+      if (h.getAttribute('data-licon') === name) continue;
+      const Pascal = name.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('');
+      const node = L[Pascal] || (L.icons && L.icons[name]);
+      if (!node) continue;
+      const svg = L.createElement(node);
+      svg.setAttribute('width', '100%');
+      svg.setAttribute('height', '100%');
+      svg.style.display = 'block';
+      h.style.display = 'inline-flex';
+      h.style.alignItems = 'center';
+      h.style.justifyContent = 'center';
+      while (h.firstChild) h.removeChild(h.firstChild);
+      h.appendChild(svg);
+      h.setAttribute('data-licon', name);
+    }
+  }
+
+  buildChart() {
+    const data = [3520,3650,3780,3900,4050,4180,4300,4400,4488];
+    const W = 360, H = 90, top = 8, bot = 10, min = 3000, max = 4700;
+    const pts = data.map((v,i) => [ (i/(data.length-1))*W, top + (1-(v-min)/(max-min))*(H-top-bot) ]);
+    const linePoints = pts.map(p => p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');
+    let area = 'M '+pts[0][0].toFixed(1)+','+(H-bot);
+    pts.forEach(p => { area += ' L '+p[0].toFixed(1)+','+p[1].toFixed(1); });
+    area += ' L '+pts[pts.length-1][0].toFixed(1)+','+(H-bot)+' Z';
+    const last = pts[pts.length-1];
+    return { linePoints, areaPath: area, lastX: last[0].toFixed(1), lastY: last[1].toFixed(1) };
+  }
+
+  renderVals() {
+    const sf = this.state.selectedFunc;
+    const funcList = this.FUNCS.map(f => ({
+      ...f,
+      onSelect: () => this.selectFunc(f.id),
+      itemBg: f.id === sf ? '#4ADE80' : 'rgba(255,255,255,.02)',
+      iconColor: f.id === sf ? '#0C1410' : '#8FA396',
+      labelColor: f.id === sf ? '#0C1410' : '#C7D2C9',
+      chevColor: f.id === sf ? '#0C1410' : '#3E5044',
+    }));
+    const activeF = this.FUNCS.find(f => f.id === sf) || this.FUNCS[0];
+    const sel = {};
+    this.FUNCS.forEach(f => { sel[f.id] = (f.id === sf); });
+    return {
+      funcList, sel,
+      funcTitle: activeF.label,
+      funcDesc: activeF.desc,
+      funcIcon: activeF.icon,
+      checks: ['Mapa satelital de potreros','Diagnóstico técnico con puntaje','Precio del ternero en tiempo real','Modo trabajador con PIN','Chat del campo','Clima integrado','Asistente IA'],
+      freePlan: [
+        { icon:'check', text:'Calculadora de rentabilidad', color:'#C7D2C9' },
+        { icon:'check', text:'Diagnóstico básico', color:'#C7D2C9' },
+        { icon:'check', text:'Precio del ternero', color:'#C7D2C9' },
+        { icon:'check', text:'Asistente IA', color:'#C7D2C9' },
+        { icon:'minus', text:'Rodeo, sanidad, forraje', color:'#5E7466' },
+        { icon:'minus', text:'Mapa satelital', color:'#5E7466' },
+        { icon:'minus', text:'Modo trabajador', color:'#5E7466' },
+      ],
+      proPlan: ['Todo lo gratuito','Rodeo, sanidad, forraje','Mapa satelital de potreros','Modo trabajador (3 usuarios)','Calendario y alertas automáticas','Exportar PDF y Excel','Clima integrado'],
+      advPlan: ['Todo el Plan Productor','Hasta 20 campos','Vista consolidada','Reportes por cliente','Usuarios ilimitados','Soporte prioritario'],
+      ...this.buildChart(),
+    };
+  }
+}
+</script>
+</body>
+</html>
